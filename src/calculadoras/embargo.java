@@ -22,25 +22,25 @@ public class embargo {
 
 		if (salario > smi * 2) {
 			embargo += smi * 0.3;
-		} else {
+		} else if (salario < smi * 2) {
 			embargo = (salario - smi) * 0.3;
 		}
 
 		if (salario > smi * 3) {
 			embargo += smi * 0.5;
-		} else {
+		} else if (salario > smi * 2 && salario < smi * 3) {
 			embargo = (salario - smi * 2) * 0.5;
 		}
 
 		if (salario > smi * 4) {
 			embargo += smi * 0.6;
-		} else {
+		} else if (salario > smi * 3 && salario < smi * 4) {
 			embargo = (salario - smi * 3) * 0.6;
 		}
 
 		if (salario > smi * 5) {
 			embargo += smi * 0.75;
-		} else {
+		} else if (salario > smi * 4 && salario < smi * 5) {
 			embargo = (salario - smi * 4) * 0.75;
 		}
 
