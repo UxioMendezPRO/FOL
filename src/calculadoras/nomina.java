@@ -71,10 +71,8 @@ public class nomina {
 		// Pagas extra
 		System.out.println("Paga extra");
 		double extra = in.nextDouble();
-		if (grupo > 7) {
-			extra = extra * 365;
-		}
-		double prorrateo = calcularProrrata(extra);
+		
+		double prorrateo = calcularProrrata(extra, grupo, diasMes);
 
 		double totalDevengado = calcularDevengo(sb, complementos, dietas, extra, horasExtra, prorrateo);
 		double retenciones = calcularRetenciones(sb, complementos, prorrateo, tipoIrpf, horasExtra, dietas, extra, temporal, totalDevengado);
@@ -112,8 +110,10 @@ public class nomina {
 		return dietas;
 	}
 
-	public static double calcularProrrata(double extra) {
-
+	public static double calcularProrrata(double extra, int grupo, int diasMes) {
+		if (grupo > 7) {
+			return extra * 2 * 30 / 365 * diasMes;
+		}
 		return extra * 2 / 12;
 
 	}
