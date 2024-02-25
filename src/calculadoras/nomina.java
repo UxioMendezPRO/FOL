@@ -4,9 +4,9 @@ import java.util.Scanner;
 
 public class nomina {
 
-	public static void main(String[] args) {
+	static Scanner in = new Scanner(System.in);
 
-		Scanner in = new Scanner(System.in);
+	public static void main(String[] args) {
 
 		// Grupo cotizacion y bases minimas y maximas
 		System.out.println("Grupo");
@@ -45,7 +45,6 @@ public class nomina {
 		if (menu == 1) {
 			temporal = true;
 		}
-
 		// IRPF
 		System.out.println("Porcentaje IRPF");
 		double tipoIrpf = in.nextDouble();
@@ -53,30 +52,17 @@ public class nomina {
 		// Salario base
 		System.out.println("Salario base");
 		double sb = in.nextDouble();
-		if (grupo > 7) {
-			sb = sb * diasMes;
-		}
+		sb = calcularSB(sb, grupo, diasMes);
 
 		// Complementos salariales
-		double complementos = 0;
 		System.out.println("cuantos Complementos salariales");
 		int pluses = in.nextInt();
-		for (int i = 0; i < pluses; i++) {
-			System.out.println("importe plus");
-			complementos += in.nextDouble();
-		}
-		if (grupo > 7) {
-			complementos = complementos * diasMes;
-		}
+		double complementos = calcularComplementos(pluses, grupo, diasMes);
 
 		// Extrasalariales
-		double dietas = 0;
 		System.out.println("cuantos Complementos extrasalariales");
 		pluses = in.nextInt();
-		for (int i = 0; i < pluses; i++) {
-			System.out.println("importe plus");
-			dietas += in.nextDouble();
-		}
+		double dietas = calcularDietas(pluses);
 
 		// Horas extra
 		System.out.println("Horas extra");
@@ -88,13 +74,55 @@ public class nomina {
 		if (grupo > 7) {
 			extra = extra * 365;
 		}
+		double prorrateo = calcularProrrata(extra);
 
-		// Prorrateo
-		double prorrateo = extra * 2 / 12;
+		double totalDevengado = calcularDevengo(sb, complementos, dietas, extra, horasExtra, prorrateo);
+		double retenciones = calcularRetenciones(sb, complementos, prorrateo, tipoIrpf, horasExtra, dietas, extra, temporal, totalDevengado);
+		System.out.println("Líquido a percibir: " + (totalDevengado - retenciones));
+
+	}
+
+	public static double calcularSB(double sb, int grupo, int diasMes) {
+
+		if (grupo > 7) {
+			return sb * diasMes;
+		} else
+			return sb;
+	}
+
+	public static double calcularComplementos(int pluses, int grupo, int diasMes) {
+		double complementos = 0;
+
+		for (int i = 0; i < pluses; i++) {
+			System.out.println("importe plus");
+			complementos += in.nextDouble();
+		}
+		if (grupo > 7) {
+			complementos = complementos * diasMes;
+		}
+		return complementos;
+	}
+
+	public static double calcularDietas(int pluses) {
+		double dietas = 0;
+		for (int i = 0; i < pluses; i++) {
+			System.out.println("importe plus");
+			dietas += in.nextDouble();
+		}
+		return dietas;
+	}
+
+	public static double calcularProrrata(double extra) {
+
+		return extra * 2 / 12;
+
+	}
+
+	public static double calcularDevengo(double sb, double complementos, double dietas, double extra, double horasExtra, double prorrateo) {
 		boolean prorrateadas = false;
 		boolean cobraExtra = false;
 		System.out.println("Prorrateadas?\n" + "1. SI\n" + "2. NO");
-		menu = in.nextInt();
+		int menu = in.nextInt();
 		if (menu == 1) {
 			extra = extra * 2 / 12;
 			prorrateadas = true;
@@ -106,8 +134,6 @@ public class nomina {
 				cobraExtra = true;
 			}
 		}
-
-		// Total devengado
 		double totalDevengado = sb + complementos + dietas + horasExtra;
 		if (prorrateadas) {
 			totalDevengado += prorrateo;
@@ -115,7 +141,12 @@ public class nomina {
 		if (cobraExtra) {
 			totalDevengado += extra / 2;
 		}
+		System.out.println("Total Devengado: " + totalDevengado);
+		return totalDevengado;
+	}
 
+	public static double calcularRetenciones(double sb, double complementos, double prorrateo, double tipoIrpf,
+			double horasExtra, double dietas, double extra, boolean temporal, double totalDevengado) {
 		// Bases de cotizacion
 		double bccc = sb + complementos + prorrateo;
 		double bccp = bccc + horasExtra;
@@ -132,15 +163,12 @@ public class nomina {
 		}
 		double formacion = bccp * 0.001;
 		double extrasCot = horasExtra * 0.047;
+		
 
 		// Retencion IRPF
 		double irpf = baseIrpf * tipoIrpf / 100;
 
-		// liquido a percibir
-		double liquido = totalDevengado - contigenciasComunes - mei - desempleo - formacion - extrasCot - irpf;
-
 		// Prints
-		System.out.println("Total devengado" + totalDevengado);
 		System.out.println("BCCC " + bccc);
 		System.out.println("BCCP " + bccp);
 		System.out.println("IRPF " + baseIrpf);
@@ -149,8 +177,10 @@ public class nomina {
 		System.out.println("Desempleo " + desempleo);
 		System.out.println("Formación " + formacion);
 		System.out.println("Extras " + extrasCot);
-		System.out.println(contigenciasComunes + mei + desempleo + formacion + extrasCot + irpf);
-		System.out.println("Líquido a percibir " + liquido);
+		System.out.println("Retencion SS " + (contigenciasComunes + mei + desempleo + formacion + extrasCot));
+		System.out.println("Retención IRPF " + irpf);
+
+		return contigenciasComunes + mei + desempleo + formacion + extrasCot + irpf;
 
 	}
 
