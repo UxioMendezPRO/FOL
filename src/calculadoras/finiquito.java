@@ -80,15 +80,14 @@ public class finiquito {
     nomina.calcularRetenciones(sb, complementos, prorrateo, tipoIrpf, horasExtra, dietas, extra, temporal, prorrateo);
 
     // Vacaciones
-    int diasTrabajados = Period.between(LocalDate.of(fechaDespido.getYear(), 1, 1), fechaDespido).getDays();
-    int vacionesCorrespondientes = 30 * diasTrabajados / 365;
-    double salarioDiario = (sb + complementos + prorrateo) / 30 * diaDespido;
+    int mesesTrabajados = Period.between(fechaInicio, fechaDespido).getMonths();
+    int vacionesCorrespondientes = 30 / 12 * mesesTrabajados;
+    double salarioDiario = (sb + complementos + prorrateo) * 12 / 365;
     double importeVacaciones = (vacionesCorrespondientes - vacionesDisfrutadas) * salarioDiario;
     System.out.println("Vacaciones " + importeVacaciones);
 
     // Indemnización
     double indemnizacion = 0;
-    int mesesTrabajados = Period.between(fechaInicio, fechaDespido).getMonths();
     if (objetivo) {
       indemnizacion = 20 / 12 * mesesTrabajados * salarioDiario;
     }
