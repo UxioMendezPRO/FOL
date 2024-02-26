@@ -8,7 +8,7 @@ public class embargo {
 
 		Scanner in = new Scanner(System.in);
 
-		double smi = 1080;
+		double smi = 1134;
 		double salario = in.nextDouble();
 		double deuda = in.nextDouble();
 
