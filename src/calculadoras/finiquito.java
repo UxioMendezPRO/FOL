@@ -36,9 +36,8 @@ public class finiquito {
     int grupo = in.nextInt();
 
     // Fecha del despido
-    int diaDespido;
     System.out.println("Fecha despido yyyy/MM/dd");
-    LocalDate fechaDespido = LocalDate.of(in.nextInt(), in.nextInt(), diaDespido = in.nextInt());
+    LocalDate fechaDespido = LocalDate.of(in.nextInt(), in.nextInt(), in.nextInt());
 
     // Antigüedad
     System.out.println("Antiguedad yyyy/MM/dd");
@@ -99,6 +98,8 @@ public class finiquito {
     }
     System.out.println("Indemnizacion " + indemnizacion);
 
+
+    in.close();
   }
 
 }

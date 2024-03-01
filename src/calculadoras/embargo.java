@@ -15,6 +15,7 @@ public class embargo {
 		System.out.println("Embargo mensual: " + calcularEmbargo(salario, smi));
 		calcularTiempo(calcularEmbargo(salario, smi), deuda);
 
+		in.close();
 	}
 
 	public static double calcularEmbargo(double salario, double smi) {
@@ -68,5 +69,7 @@ public class embargo {
 		System.out.println("meses: " + contador);
 		System.out.println("ultimo mes: " + ultimoMes);
 	}
+
+
 
 }
