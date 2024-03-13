@@ -16,6 +16,7 @@ public class nomina {
 			System.out.println("Dias del mes");
 			diasMes = in.nextInt();
 		}
+		@SuppressWarnings("unused")
 		double baseMin, baseMax = 4495.5;
 		switch (grupo) {
 			case 1:
@@ -71,11 +72,12 @@ public class nomina {
 		// Pagas extra
 		System.out.println("Paga extra");
 		double extra = in.nextDouble();
-		
+
 		double prorrateo = calcularProrrata(extra, grupo, diasMes);
 
 		double totalDevengado = calcularDevengo(sb, complementos, dietas, extra, horasExtra, prorrateo);
-		double retenciones = calcularRetenciones(sb, complementos, prorrateo, tipoIrpf, horasExtra, dietas, extra, temporal, totalDevengado);
+		double retenciones = calcularRetenciones(sb, complementos, prorrateo, tipoIrpf, horasExtra, dietas, extra, temporal,
+				totalDevengado);
 		System.out.println("Líquido a percibir: " + (totalDevengado - retenciones));
 
 	}
@@ -118,7 +120,8 @@ public class nomina {
 
 	}
 
-	public static double calcularDevengo(double sb, double complementos, double dietas, double extra, double horasExtra, double prorrateo) {
+	public static double calcularDevengo(double sb, double complementos, double dietas, double extra, double horasExtra,
+			double prorrateo) {
 		boolean prorrateadas = false;
 		boolean cobraExtra = false;
 		System.out.println("Prorrateadas?\n" + "1. SI\n" + "2. NO");
@@ -163,7 +166,6 @@ public class nomina {
 		}
 		double formacion = bccp * 0.001;
 		double extrasCot = horasExtra * 0.047;
-		
 
 		// Retencion IRPF
 		double irpf = baseIrpf * tipoIrpf / 100;
