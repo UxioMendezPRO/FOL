@@ -33,7 +33,7 @@ public class jubilacion {
     double pension = baseCotizacion * porcentaje / 100;
     System.out.println(porcentaje);
     System.out.println(pension);
-
+    in.close();
   }
 
 }
