@@ -24,7 +24,6 @@ public class Elecciones {
     System.out.println("En blanco");
     int blancoTyA = in.nextInt();
     System.out.println("Nulos");
-    int nulosTyA = in.nextInt();
 
     // calculo del 5%
     double minimoTyA = Math.round((votosTyA + blancoTyA) * 0.05);
@@ -50,7 +49,6 @@ public class Elecciones {
     System.out.println("En blanco");
     int blancoEnC = in.nextInt();
     System.out.println("Nulos");
-    int nulosEnC = in.nextInt();
 
     // calculo del 5%
     double minimoEnC = Math.round((votosEnC + blancoEnC) * 0.05);
@@ -109,6 +107,7 @@ public class Elecciones {
       System.out.println(resultadosEnC.get(i));
     }
 
+    in.close();
   }
 
 }
