@@ -7,30 +7,35 @@ public class jubilacion {
   public static void main(String[] args) {
 
     Scanner in = new Scanner(System.in);
-    // Años y meses cotizados
-    int añosCot = in.nextInt();
-    int mesesCot = in.nextInt();
-
-    int meses = añosCot * 12 + mesesCot;
-
+    // Meses cotizados
+    System.out.println("Total meses cotizados");
+    int meses = in.nextInt();
+    
+    System.out.println("Base cotización");
     double bccc = in.nextDouble();
 
     double baseCotizacion = bccc * 300 / 350;
 
     double porcentaje = 50;
-    // Suma porcentajes en funcion del los meses cotizados
-    if (meses > 15 * 12) {
-      porcentaje += 21;
+    // Suma porcentajes en funcion del los meses cotizados  
+    if (meses >180) {
+      porcentaje += 180 *0.21;
+      meses -= 180;
     }
-    if (meses > 15 * 12 + 106) {
-      porcentaje += 19;
+    if (meses > 106) {
+      porcentaje += 106 * 0.19;
+      meses -= 106;
     }
-    if (meses > 15 * 12 + 106 + 146) {
-      porcentaje += meses - 15 * 12 + 106 + 146 * 0.19;
+    if (meses > 146) {
+      porcentaje += 164 * 0.19;
+      meses -= 146; 
     }
-    //Calcula el total
+    if (meses > 0) {
+      porcentaje += meses *0.19;
+    }
+    // Calcula el total
 
-    double pension = baseCotizacion * porcentaje / 100;
+    double pension = baseCotizacion * (porcentaje / 100);
     System.out.println(porcentaje);
     System.out.println(pension);
     in.close();
