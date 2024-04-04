@@ -29,6 +29,6 @@ public class Desempleo {
 
     System.out.println("Primeros seis meses " + seisMeses);
     System.out.println("Resto " + restoMeses);
-
+    in.close();
   }
 }

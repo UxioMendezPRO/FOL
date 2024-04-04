@@ -31,21 +31,27 @@ public class Baja {
     int base = in.nextInt();
 
     double prestación = 0;
-    //Comun
+    // Comun
     if (comun) {
       double cot = base / 30;
-      if (dias > 3)
+      if (dias > 3) {
         dias -= 3;
-      if (dias > 17)
-        prestación = 17 * cot * 0.6;
-      dias -= 17;
-      prestación += dias * cot * 0.75;
-      //Profesional
+      }
+      if (dias < 17) {
+        prestación += dias * cot * 0.6;
+      } else {
+        prestación += 17 * cot * 0.6;
+        dias -= 17;
+        prestación += dias * cot * 0.75;
+
+      }
+
+      // Profesional
     } else {
       System.out.println("Horas extras mes");
       int extrasMes = in.nextInt();
       System.out.println("Horas extras año");
-      int extrasAño =in.nextInt();
+      int extrasAño = in.nextInt();
       double cot = (base - extrasMes) / 30 + extrasAño / 365;
       prestación = dias * cot * 0.75;
 
